@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :space_ships
+  resources :pets
   resources :users
 
   get "signup" => "users#new", :as => "signup"

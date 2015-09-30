@@ -1,0 +1,21 @@
+<%= form_for(@space_ship) do |f| %>
+  <% if @space_ship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@space_ship.errors.count, "error") %> prohibited this space_ship from being saved:</h2>
+
+      <ul>
+      <% @space_ship.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
