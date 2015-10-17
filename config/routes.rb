@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
-  resources :space_ships
-  resources :pets
-  resources :users
 
-  get "signup" => "users#new", :as => "signup"
+  # Use shallow resources, as recommended by the Rails guides
+  shallow do
+    resources :users, :constraints => { :id => /.*/ } do # allow dots in URLs for querying by email
+      resources :playlists do
+        resources :tracks
+      end
+    end
+  end
+
+  get 'signup' => 'users#new', :as => 'signup'
   get 'login' => 'sessions#new'
-  post "login" => "sessions#create"
-  get "logout" => "sessions#destroy", :as => "logout"
+  post 'login' => 'sessions#create'
+  get 'logout' => 'sessions#destroy', :as => 'logout'
+
+  get '/uploads/grid/user/avatar/:id/:filename' => 'users#avatar', :via => [:get], :as => 'gridfs_avatar'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

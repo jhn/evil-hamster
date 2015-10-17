@@ -1,0 +1,9 @@
+<ul>
+    <% playlists.each do |playlist| %>
+        <li>
+            <%= link_to playlist.title, playlist_path(playlist) %> |
+            <%= link_to 'Edit', edit_playlist_path(playlist) %>
+            <%= link_to 'Delete', playlist_path(playlist), method: :delete %>
+        </li>
+    <% end %>
+</ul>

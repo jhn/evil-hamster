@@ -1,0 +1,6 @@
+<h1>Edit <%= @playlist.title %> </h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', user_path(@playlist.user) %> |
+<%= link_to 'Delete', playlist_path(@playlist), method: :delete, data: { confirm: 'Are you sure?' } %>

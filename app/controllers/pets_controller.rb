@@ -24,7 +24,7 @@ class PetsController < ApplicationController
   # POST /pets
   # POST /pets.json
   def create
-    @pet = Pet.new(pet_params)
+    @pet = Pet.new(flatten_date_attrs(pet_params, ['date_of_birth']))
 
     respond_to do |format|
       if @pet.save
