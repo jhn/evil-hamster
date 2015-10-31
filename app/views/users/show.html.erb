@@ -1,19 +1,57 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
+  <strong>Hello, <%= @user.first_name %>!</strong>
 </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
+<% unless @user.avatar.url.nil? %>
+    <%= image_tag(@user.avatar.url, height: '75', width: '75') %>
+<% end %>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<div>
+    <strong>You social links:</strong>
+    <% if @user.github.blank? && @user.linkedin.blank? %>
+        None yet.
+        <%= link_to 'Update your profile', edit_user_path(@user) %>
+        to add your LinkedIn and Github links!
+    <% else %>
+        <ul>
+            <% unless @user.github.blank? %>
+                <li>
+                    <%= link_to 'Github', @user.github %>
+                </li>
+            <% end %>
+            <% unless @user.linkedin.blank? %>
+                <li>
+                    <%= link_to 'LinkedIn', @user.linkedin %>
+                </li>
+            <% end %>
+        </ul>
+    <% end %>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div>
+    <% if !@user.playlists.empty? %>
+      <strong>Your Public Playlists:</strong>
+      <% if @user.public_playlists.empty? %>
+        None yet.
+      <% else %>
+        <%= render partial: 'user_playlists', locals: { playlists: @user.public_playlists } %>
+      <% end %>
+
+      <strong>Your Private Playlists:</strong>
+      <% if @user.private_playlists.empty? %>
+        None yet.
+      <% else %>
+        <%= render partial: 'user_playlists', locals: { playlists: @user.private_playlists } %>
+      <% end %>
+
+        <%= link_to 'Create new playlist', new_user_playlist_path(@user) %>
+    <% else %>
+        It looks like you have no playlists yet.
+        <%= link_to 'Click here to create some!', new_user_playlist_path(@user) %>
+    <% end %>
+</div>
+
+
+<%= link_to 'Edit Profile', edit_user_path(@user) %>
